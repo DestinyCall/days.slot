@@ -5,18 +5,18 @@ const port = 3000
 app.get('/', (req, res) => {
     let start = new Date();
     let end = new Date(start);
-    end.setDate(end.getDate() + 7);
+    end.setDate(end.getDate() + 6);
 
     let startDate = new Date(start).toISOString().slice(0, 10);
     let endDate = new Date(end).toISOString().slice(0, 10);
 
-    // Returns an array of dates between the two dates
-    Date.prototype.addDays = function(days)
-    {
-        var dat = new Date(this.valueOf())
-        dat.setDate(dat.getDate() + days);
-        return dat;
-    }
+    // // Returns an array of dates between the two dates
+    // Date.prototype.addDays = function(days)
+    // {
+    //     var dat = new Date(this.valueOf())
+    //     dat.setDate(dat.getDate() + days);
+    //     return dat;
+    // }
  
     const getDates = (startDate, stopDate) =>
     {
@@ -29,7 +29,9 @@ app.get('/', (req, res) => {
                date:currentDate.toISOString().slice(0, 10)
            }
          dateArray.push(day)
-         currentDate = currentDate.addDays(1);
+         let dat = new Date(currentDate)
+         dat.setDate(dat.getDate() + 1);
+         currentDate = dat
        }
        return dateArray;
      }
