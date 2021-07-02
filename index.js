@@ -5,7 +5,7 @@ const port = 3000
 app.get('/', (req, res) => {
     let start = new Date();
     let end = new Date(start);
-    end.setDate(end.getDate() + 6);
+    end.setDate(end.getDate() + 1);
 
     let startDate = new Date(start).toISOString().slice(0, 10);
     let endDate = new Date(end).toISOString().slice(0, 10);
@@ -45,9 +45,22 @@ app.get('/', (req, res) => {
          daysList:dateArray
     };
     
+
+    convertToTime = (strTime) => {
+      let hours = Number(strTime.match(/^(\d+)/)[1]);     
+      let modifier = strTime.slice(-2);
+      let strHours = hours.toString();      
+      return strHours + ":" + "00"+ " " + modifier;
+    }
+
     let newDays = days.daysList.filter(val => !offDays.includes(val.day));
     days.newDays = newDays
-    res.json(days)
+    myDate='2021-07-01';
+    myTime='11AM';
+    let dTime = convertToTime(myTime);
+    scheduleDT=myDate+" "+dTime;
+    let timeinMs=new Date(scheduleDT).getTime();
+    res.json({days,timeinMs})    
 })
 
 app.listen(port, () => {
